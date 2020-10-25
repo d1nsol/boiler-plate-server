@@ -9,8 +9,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "backend": "nodemon index.js",
-    "frontend": "npm run start --prefix client"
+    "backend": "nodemon index.js"
   },
   "author": "d1nsol",
   "license": "ISC",
