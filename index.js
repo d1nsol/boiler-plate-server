@@ -43,5 +43,6 @@ app.use('/uploads', express.static('uploads'));
 const port = process.env.PORT || 5000
 
 app.listen(port, () => {
+  console.log(`Server start...`)
   console.log(`Server Listening on ${port}`)
 });
