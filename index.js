@@ -46,3 +46,9 @@ app.listen(port, () => {
   console.log(`Server start...`)
   console.log(`Server Listening on ${port}`)
 });
+
+// heroku sleep 방지
+const http = require('http');
+setInterval(function() {
+  http.get(config.herokuURI);
+}, 600000);
