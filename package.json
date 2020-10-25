@@ -10,8 +10,7 @@
   "scripts": {
     "start": "node index.js",
     "backend": "nodemon index.js",
-    "frontend": "npm run start --prefix client",
-    "heroku-postbuild": "npm install && npm run start"
+    "frontend": "npm run start --prefix client"
   },
   "author": "d1nsol",
   "license": "ISC",
