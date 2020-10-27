@@ -35,57 +35,69 @@ const userSchema = mongoose.Schema({
     }
 })
 
-
-userSchema.pre('save', function( next ) {
-    var user = this;
-    
-    if(user.isModified('password')){    
-        // console.log('password changed')
-        bcrypt.genSalt(saltRounds, function(err, salt){
-            if(err) return next(err);
-    
-            bcrypt.hash(user.password, salt, function(err, hash){
-                if(err) return next(err);
-                user.password = hash 
-                next()
-            })
-        })
+//save 전 수행됨
+userSchema.pre('save', function(next) {
+    const user = this;
+    if(user.isModified('password')) {
+        // 비밀번호를 암호화 시킨다.
+        // Salt 를 이용해서 비밀번호를 암호화 해야함
+        bcrypt.genSalt(saltRounds, function(err, salt) {
+            if(err) {
+                return next(err);
+            }
+            bcrypt.hash(user.password, salt, function(err, hash) {
+                if(err) {
+                    return next(err);
+                }
+                user.password = hash;
+                next();
+            });
+        });
     } else {
-        next()
+        next();
     }
 });
 
-userSchema.methods.comparePassword = function(plainPassword,cb){
-    bcrypt.compare(plainPassword, this.password, function(err, isMatch){
-        if (err) return cb(err);
-        cb(null, isMatch)
-    })
-}
+userSchema.methods.comparePassword = function(plainPassword, callBackFunction) {
+    
+    // plainPassword 와 암호화된 비밀번호 비교
+    bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
+        if(err) return callBackFunction(err);
+        callBackFunction(null, isMatch);
+    });
+};
 
-userSchema.methods.generateToken = function(cb) {
-    var user = this;
-    console.log('user',user)
-    console.log('userSchema', userSchema)
-    var token =  jwt.sign(user._id.toHexString(),'secret')
-    var oneHour = moment().add(1, 'hour').valueOf();
+userSchema.methods.generateToken = function(callBackFunction) {
 
+    const user = this;
+    
+    // jsonwebtoken 을 이용해서 token 을 생성하기
+    const token = jwt.sign(user._id.toHexString(), 'secretToken');
+    const oneHour = moment().add(1, 'hour').valueOf();
     user.tokenExp = oneHour;
     user.token = token;
-    user.save(function (err, user){
-        if(err) return cb(err)
-        cb(null, user);
-    })
+    user.save(function(err, user) {
+        if(err) return callBackFunction(err);
+        callBackFunction(null, user);
+    });
+    
 }
 
-userSchema.statics.findByToken = function (token, cb) {
-    var user = this;
+userSchema.statics.findByToken = function(token, callBackFunction) {
+    const user = this;
 
-    jwt.verify(token,'secret',function(err, decode){
-        user.findOne({"_id":decode, "token":token}, function(err, user){
-            if(err) return cb(err);
-            cb(null, user);
-        })
-    })
+    // 토큰을 decode 한다.
+    jwt.verify(token, 'secretToken', function(err, decoded) {
+        // 유저 아이디를 이용해서 유저를 찾은 다음에
+        // 클라이언트에서 가져온 token 과 DB 에 보관된 토큰이 일치하는지 확인
+
+        user.findOne({"_id": decoded, "token": token}, function(err, user) {
+            if(err) {
+                return callBackFunction(err);
+            }
+            callBackFunction(null, user);
+        });
+    });
 }
 
 const User = mongoose.model('User', userSchema);

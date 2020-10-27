@@ -1,35 +1,36 @@
 {
-    "name": "boiler-plate-server",
-    "version": "1.0.0",
-    "description": "boiler-plate-server",
-    "main": "index.js",
-    "engine" : {
-      "node" : "12.18.1",
-      "npm" : "6.14.5"
-    },
-    "scripts": {
-      "start": "node index.js",
-      "backend": "nodemon index.js",
-      "frontend": "npm run start --prefix client"
-    },
-    "author": "d1nsol",
-    "license": "ISC",
-    "dependencies": {
-      "bcrypt": "^5.0.0",
-      "body-parser": "^1.19.0",
-      "cookie-parser": "^1.4.5",
-      "cors": "^2.8.5",
-      "debug": "^4.2.0",
-      "express": "^4.17.1",
-      "jsonwebtoken": "^8.5.1",
-      "moment": "^2.29.1",
-      "mongoose": "^5.10.9",
-      "react-redux": "^7.2.1",
-      "saslprep": "^1.0.3",
-      "supports-color": "^7.2.0"
-    },
-    "devDependencies": {
-      "concurrently": "^5.3.0",
-      "nodemon": "^2.0.5"
-    }
+  "name": "boiler-plate-server",
+  "version": "1.0.0",
+  "description": "boiler-plate-server",
+  "main": "index.js",
+  "engine": {
+    "node": "12.18.1",
+    "npm": "6.14.5"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "backend": "nodemon index.js",
+    "frontend": "npm run start --prefix client"
+  },
+  "author": "d1nsol",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "debug": "^4.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.10.9",
+    "node-localstorage": "^2.1.6",
+    "react-redux": "^7.2.1",
+    "saslprep": "^1.0.3",
+    "supports-color": "^7.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.5"
   }
+}
