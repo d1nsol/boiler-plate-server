@@ -6,8 +6,8 @@ let auth = (req, res, next) => {
 
   // 클라이언트 쿠키에서 토큰을 가져온다.
   // to do jsyoo : res.cookie 저장 안되는 이슈 확인하기
-  const token = req.cookies.x_auth;
-  console.log('token :', token);
+  //const token = req.cookies.x_auth;
+  const token = req.body.x_auth;
 
   // 토큰을 복호화 한 후 유저를 찾는다.
   User.findByToken(token, (err, user) => {

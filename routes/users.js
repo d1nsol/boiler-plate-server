@@ -8,7 +8,7 @@ const { auth } = require("../middleware/auth");
 //             User
 //=================================
 
-router.get("/auth", auth, (req, res) => {
+router.post("/auth", auth, (req, res) => {
 
     // 여기까지 미들웨어를 통과한건, Authentication 이 true
     // role 0 -> 일반 / 1 -> 관리자
@@ -70,8 +70,8 @@ router.post("/login", (req, res) => {
       
               // 토큰을 저장한다. 쿠키 or 로컬스토리지
               // to do jsyoo : res.cookie 저장 안되는 이슈 확인하기
-              res.cookie("x_authExp", user.tokenExp);
-              res.cookie("x_auth", user.token);
+              //res.cookie("x_authExp", user.tokenExp);
+              //res.cookie("x_auth", user.token);
               res.status(200)
                 .json(
                     {
